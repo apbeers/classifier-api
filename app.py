@@ -10,8 +10,10 @@ import numpy as np
 from flask import Flask, request, jsonify
 import pickle
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Load the model
 
@@ -30,12 +32,7 @@ def predict():
     # Make prediction using model loaded from disk as per the data.
     prediction = model.predict(vectorizer.transform([data['url']]))
 
-    # Take the first value of prediction
-    output = prediction[0]
-    response = jsonify(str(bool(output)))
-    response.headers.add('Access-Control-Allow-Origin', '*')
-
-    return response
+    return jsonify(str(bool(prediction[0])))
 
 
 @app.route('/')
