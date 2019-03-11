@@ -32,8 +32,10 @@ def predict():
 
     # Take the first value of prediction
     output = prediction[0]
+    response = jsonify(str(bool(output)))
+    response.headers.add('Access-Control-Allow-Origin', '*')
 
-    return jsonify(str(bool(output)))
+    return response
 
 
 @app.route('/')
