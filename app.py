@@ -37,18 +37,6 @@ def predict():
     # Get the data from the POST request.
     data = request.get_json(force=True)
 
-    if not data['ip_for_url']:
-        try:
-            data['ip_for_url'] = socket.gethostbyname(data['url'])
-        except socket.gaierror as e:
-            print('Error looking up url: {0}'.format(e))
-
-    if data['white_listed_ips'] and data['ip_for_url'] in data['white_listed_ips']:
-        return jsonify('IP for url is whitelisted: {0}'.format(data['ip_for_url']))
-
-    if data['black_listed_ips'] and data['ip_for_url'] in data['black_listed_ips']:
-        return jsonify('IP for url is blacklisted {0}'.format(data['ip_for_url']))
-
     original_url = str(data['url'])
     stripped_url = original_url.replace('https://', '').replace('http://', '')
 
